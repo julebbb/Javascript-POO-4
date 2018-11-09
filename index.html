@@ -25,7 +25,15 @@
 
   <!-- Add your site or application content here -->
   <main id="main">
-
+    <select name="sort"  id="sort">
+      <option value="id" onclick='trySom(this)'>ID</option>
+      <option value="name" id='miaou' onclick='trySom(this)'>Name</option>
+      <option value="age" onclick='trySom(this)'>Age</option>
+      <option value="city" onclick='trySom(this)'>City</option>
+    </select>
+    <div id="table">
+      
+    </div>
   </main>
 
   <script src="js/vendor/modernizr-3.6.0.min.js"></script>
