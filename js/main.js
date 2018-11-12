@@ -1,32 +1,37 @@
+//Take div with id = table
 var tableDiv = document.getElementById('table');
-var selected = document.getElementsByTagName('select');
 
+//Begin a new xml resquest for ajax
 var xhttp = new XMLHttpRequest();
-
 
 xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
+        //Take json file and make object in a variable
         customer = JSON.parse(xhttp.responseText);
-
+        
+        //Display table in begin 
         htmlManager.htmlTable(customer.Customer);
         
     }
 };
 
+//Function on click in select
 function trySom(element) {
+    //Sort table according to element.value
     sortButton.sortHtml(element);
 }
 
 xhttp.open("GET", "js/main.json", true);
-xhttp.overrideMimeType("application/json");
+xhttp.responseType = "text";
 xhttp.send(null)
 
 let htmlManager = {
-    table: '<table class="table"><tr><th>Id</th><th>Name</th><th>Age</th><th>City</th></tr>',
+    
+    //Function for display sort in table
     htmlTable: function (object) {
-        
+        table =  '<table class="table"><tr class="table-color"><th>Id</th><th>Name</th><th>Age</th><th>City</th></tr>';
         for (i = 0; i < object.length; i++) {
-            this.table += "<tr><td>" +
+            table += "<tr><td>" +
                 object[i].id +
                 "</td><td>" +
                 object[i].name +
@@ -36,78 +41,64 @@ let htmlManager = {
                 object[i].city +
                 "</td></tr>";
         }
-        tableDiv.innerHTML = this.table;
+        tableDiv.innerHTML = table;
     }
 }
 
 let sortButton = {
     sort: '',
     sortHtml: function(element) {
+        //Check value in element
+        if (element.value == "city" || element.value == "name") {
+            this.sort = this.sortCaracter(element.value);
+        } else if (element.value == "age" || element.value == "id") {
+            this.sort = this.sortNumber(element.value);
+        } 
 
-        if (element.value == "city") {
-            this.sort = this.sortCity();
-        } else if (element.value == "name") {
-            this.sort = this.sortName();
-        } else if (element.value == "age") {
-            this.sort = this.sortAge();
+        htmlManager.htmlTable(this.sort);
+    },
+    sortCaracter: function(element) {
+        //Sort element if value = name or city
+        if (element == "name") {
+            //Function find in javascript kit
+            let sortName = customer.Customer.sort(function (a, b) {
+                var nameA = a.name.toLowerCase(),
+                    nameB = b.name.toLowerCase()
+                if (nameA < nameB) //sort string ascending
+                    return -1
+                if (nameA > nameB)
+                    return 1
+                return 0 //default return value (no sorting)
+            });
+
+            return sortName;
         } else {
-            this.sort = this.sortId();
+            let sortCity = customer.Customer.sort(function (a, b) {
+                var cityA = a.city.toLowerCase(),
+                    cityB = b.city.toLowerCase()
+                if (cityA < cityB) //sort string ascending
+                    return -1
+                if (cityA > cityB)
+                    return 1
+                return 0 //default return value (no sorting)
+            });
+            return sortCity;
+            
         }
-
-        this.htmlManager();
     },
-    sortId: function() {
-        let sortId = customer.Customer.sort(function (a, b) {
-            return a.id - b.id
-        });
-        return sortId;
-    },
-    sortName: function() {
-        //Find this function in javascript kit
-        let sortName = customer.Customer.sort(function (a, b) {
-            var nameA = a.name.toLowerCase(),
-                nameB = b.name.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-                return -1
-            if (nameA > nameB)
-                return 1
-            return 0 //default return value (no sorting)
-        });
-
-        return sortName;
-    },
-    sortAge: function() {
-        let sortAge = customer.Customer.sort(function (a, b) {
-            return a.age - b.age
-        });
-        return sortAge;
-    },
-    sortCity: function() {
-        let sortCity = customer.Customer.sort(function (a, b) {
-            var cityA = a.city.toLowerCase(),
-                cityB = b.city.toLowerCase()
-            if (cityA < cityB) //sort string ascending
-                return -1
-            if (cityA > cityB)
-                return 1
-            return 0 //default return value (no sorting)
-        });
-        return sortCity;
-    },
-    htmlManager: function() {
-        let table = '<table class="table"><tr><th>Id</th><th>Name</th><th>Age</th><th>City</th></tr>';
-
-        for (i = 0; i < this.sort.length; i++) {
-            table += "<tr><td>" +
-                this.sort[i].id +
-                "</td><td>" +
-                this.sort[i].name +
-                "</td><td>" +
-                this.sort[i].age +
-                "</td><td>" +
-                this.sort[i].city +
-                "</td></tr>";
+    sortNumber: function(element) {
+        //Sort element if value = id or age
+        if (element == "id") {
+            let sortAge = customer.Customer.sort(function (a, b) {
+                return a.id - b.id
+            });
+            return sortAge;
+        } else if (element == "age"){
+            let sortAge = customer.Customer.sort(function (a, b) {
+                return a.age - b.age
+            });
+            return sortAge;
         }
-        tableDiv.innerHTML = table;
+        
     }
 }

@@ -24,10 +24,12 @@
   <![endif]-->
 
   <!-- Add your site or application content here -->
-  <main id="main">
-    <select name="sort"  id="sort">
-      <option value="id" onclick='trySom(this)'>ID</option>
-      <option value="name" id='miaou' onclick='trySom(this)'>Name</option>
+  <main id="main" class="container">
+    <h1>Ajax</h1>
+    <p>Choisisez votre mode de trie :</p>
+    <select name="sort"  id="sort" class="row">
+      <option value="id" onclick='trySom(this)' selected>ID</option>
+      <option value="name" onclick='trySom(this)'>Name</option>
       <option value="age" onclick='trySom(this)'>Age</option>
       <option value="city" onclick='trySom(this)'>City</option>
     </select>
@@ -45,6 +47,8 @@
   crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
   crossorigin="anonymous"></script>
+
+
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
 
