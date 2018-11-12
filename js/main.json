@@ -1,0 +1,9 @@
+{ "Customer": [
+    {"id": 1, "name": "John", "age": 21, "city": "Cysoing"},
+    {"id": 2, "name": "Coco", "age": 30, "city": "Milte"},
+    {"id": 3, "name": "Kila", "age": 10, "city": "Maerchen"},
+    {"id": 4, "name": "Hydraine", "age": 28, "city": "Pont à Marq"},
+    {"id": 5, "name": "Despine", "age": 40, "city": "Avelin"},
+    {"id": 6, "name": "Léa", "age": 18, "city": "Lille"}
+    ]
+}
